@@ -1,0 +1,33 @@
+class Solution {
+public:
+    vector<int> findAnagrams(string s, string p) {
+        int sLen=s.length(),pLen=p.length();
+        if(sLen<pLen){
+            return vector<int>();
+        }
+        int ap[26]={0};
+        vector<int> ans;
+        for(int i=0;i<pLen;i++){
+            ap[p[i]-'a']++;
+        }
+        for(int i=0;i+pLen<=sLen;i++){
+            int sp[26]={0};
+            for(int j=0;j<26;j++){
+                sp[j]=ap[j];
+            }
+            for(int j=i;j<i+pLen;j++){
+                sp[s[j]-'a']--;
+            }
+            int sum=0;
+            for(int j=0;j<26;j++){
+                if(sp[j]!=0){
+                    sum++;
+                }
+            }
+            if(sum==0){
+                ans.emplace_back(i);
+            }
+        }
+        return ans;
+    }
+};
